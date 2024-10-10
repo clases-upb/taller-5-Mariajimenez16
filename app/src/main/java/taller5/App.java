@@ -17,11 +17,11 @@ public class App {
 
           
             System.out.println("Resultado del ejercicio 3 (Calcular Empaque):");
-            System.out.println(Calcular_empaque(500)); // Puedes cambiar el valor de las bombillas si lo deseas
+            System.out.println(Calcular_empaque(500)); 
 
          
             System.out.println("Resultado del ejercicio 4 (Jugar 21):");
-            Jugar_21(3); // Puedes cambiar el número de jugadores entre 1 y 6
+            Jugar_21(3); 
             
         } 
         
@@ -49,16 +49,13 @@ public class App {
             int numeroAleatorio;
             int intentos = 0;
 
-            // Pedir al usuario un número entre 1000 y 9999
             System.out.println("Ingresa un número entero positivo entre 1000 y 9999: ");
-        
 
-            // Verificar que el número esté dentro del rango
             if (numeroUsuario < 1000 || numeroUsuario > 9999) {
                 throw new Exception("El número debe estar entre 1000 y 9999.");
             }
 
-            // Generar números aleatorios hasta que coincidan con el del usuario
+          
             do {
                 numeroAleatorio = random.nextInt(9000) + 1000; // Genera entre 1000 y 9999
                 intentos++;

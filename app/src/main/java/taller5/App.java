@@ -8,11 +8,26 @@ public class App {
     public static void main(String[] args) {
         
         try {
+             System.out.println("Resultado del ejercicio 1 (Adivinar Número):");
+            Adivinar_Numero();
+
+           
+            System.out.println("Resultado del ejercicio 2 (Simular Ventas):");
+            System.out.println(Simular_ventas());
+
+          
+            System.out.println("Resultado del ejercicio 3 (Calcular Empaque):");
+            System.out.println(Calcular_empaque(500)); // Puedes cambiar el valor de las bombillas si lo deseas
+
+         
+            System.out.println("Resultado del ejercicio 4 (Jugar 21):");
+            Jugar_21(3); // Puedes cambiar el número de jugadores entre 1 y 6
             
         } 
         
         catch (Exception e) {
-            // TODO: handle exception
+               System.out.println("ocurrio un error" \n e.toString);
+                              
         }
     }
 
@@ -26,6 +41,35 @@ public class App {
     
     */ 
 
+    public static int Adivinar_Numero()throw Exception{
+    try {
+            Scanner sc = new Scanner(System.in);
+            Random random = new Random();
+            int numeroUsuario = 0;
+            int numeroAleatorio;
+            int intentos = 0;
+
+            // Pedir al usuario un número entre 1000 y 9999
+            System.out.println("Ingresa un número entero positivo entre 1000 y 9999: ");
+        
+
+            // Verificar que el número esté dentro del rango
+            if (numeroUsuario < 1000 || numeroUsuario > 9999) {
+                throw new Exception("El número debe estar entre 1000 y 9999.");
+            }
+
+            // Generar números aleatorios hasta que coincidan con el del usuario
+            do {
+                numeroAleatorio = random.nextInt(9000) + 1000; // Genera entre 1000 y 9999
+                intentos++;
+            } while (numeroAleatorio != numeroUsuario);
+
+            System.out.println("Número encontrado después de " + intentos + " intentos!");
+
+        } catch (Exception e) {
+            System.out.println("Error: ");
+        }
+    }
 
 
 
@@ -61,7 +105,31 @@ public class App {
         
       
     */
+    public static String Simular_ventas(){
+    try {
+            Random random = new Random();
+            DecimalFormat form_pesos = new DecimalFormat("$#,###.00");
+            String resultado = "";
 
+            /
+            for (int año = 1; año <= 3; año++) {
+                resultado += "Año " + año + "\n";
+                double totalVentasAño = 0;
+                for (int mes = 1; mes <= 12; mes++) {
+                    double ventasMes = random.nextDouble() * 1000000 + 500000; 
+                    totalVentasAño += ventasMes;
+                    resultado += "Ventas Mes " + mes + ": " + form_pesos.format(ventasMes) + "\n";
+                }
+                resultado += "Total ventas Año " + año + ": " + form_pesos.format(totalVentasAño) + "\n\n";
+            }
+
+            return resultado; // Devolvemos la cadena final
+
+        } catch (Exception e) {
+            
+            return "Error al generar las ventas: " + e.getMessage();
+        }
+}
     
 
 
@@ -87,7 +155,55 @@ public class App {
     */
 
 
+    public static String Calcular_empaque(int bombillas) {
+        try {
+            
+            final int BOMBILLAS_POR_CAJA = 30;
+            final int CAJAS_POR_PALLET = 16;
 
+            
+            int cajasNecesarias = bombillas / BOMBILLAS_POR_CAJA;
+            int bombillasRestantes = bombillas % BOMBILLAS_POR_CAJA;
+            int palletsNecesarios = cajasNecesarias / CAJAS_POR_PALLET;
+            int cajasRestantes = cajasNecesarias % CAJAS_POR_PALLET;
+
+     
+            String resultado = "Para " + bombillas + " bombillas, se necesitan " + cajasNecesarias + " cajas y " + palletsNecesarios + " pallets.\n";
+            resultado += "Se quedan " + bombillasRestantes + " bombillas sin empacar.\n";
+            resultado += "Se empacará así:\n";
+
+     
+            int cajaActual = 1;
+            for (int pallet = 1; pallet <= palletsNecesarios; pallet++) {
+                resultado += "Pallet " + pallet + " --> ";
+                for (int caja = 1; caja <= CAJAS_POR_PALLET; caja++) {
+                    resultado += "Caja" + cajaActual;
+                    if (caja < CAJAS_POR_PALLET) {
+                        resultado += ", ";
+                    }
+                    cajaActual++;
+                }
+                resultado += "\n";
+            }
+
+            if (cajasRestantes > 0) {
+                resultado += "Pallet " + (palletsNecesarios + 1) + " --> ";
+                for (int caja = 1; caja <= cajasRestantes; caja++) {
+                    resultado += "Caja" + cajaActual;
+                    if (caja < cajasRestantes) {
+                        resultado += ", ";
+                    }
+                    cajaActual++;
+                }
+                resultado += "\n";
+            }
+
+            return resultado;
+
+        } catch (Exception e) {
+            return "Error: ocurrió un problema con el cálculo.";
+        }
+    }
     
 
     /* 
@@ -111,6 +227,42 @@ public class App {
 
 
     */
+
+    public static void Jugar_21(int jugadores) {
+        
+        
+        try {
+            Random random = new Random();
+            
+            for (int i = 1; i <= jugadores; i++) {
+                int puntos = 0;
+
+                
+                for (int intento = 1; intento <= 3; intento++) {
+                    int carta = random.nextInt(10) + 1; 
+                    puntos += carta; 
+                }
+
+                System.out.print("Jugador " + i + ", puntos " + puntos + " --> ");
+                
+                
+                if (puntos == 21) {
+                    System.out.println("juego perfecto");
+                } else if (puntos > 21) {
+                    System.out.println("se pasó");
+                } else {
+                    System.out.println("faltaron puntos");
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error: ocurrió un problema al calcular los puntos.");
+        }
+    }
+}
+
+
+
+
 
 
 
